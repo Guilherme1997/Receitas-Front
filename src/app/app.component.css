@@ -1,0 +1,57 @@
+.cadastro-card {
+    margin-bottom: 8px;
+    margin-left:20px;
+  }
+
+  .mat-elevation-z8{
+    margin-left:20px;
+  }
+
+  .teste{
+    margin-left:20px;
+  }
+
+  th{
+    border: solid 1px #919191
+  }
+
+  td{
+    border: solid 1px #919191
+  }
+  
+  th.mat-header-cell {
+    text-align: center !important;
+}
+
+.mat-header-cell {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+td {
+    border: solid 1px #919191;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+  
+
+body {
+  background: #e2e1e0;
+  text-align: center;
+}
+
+.card {
+  background: #fff;
+  border-radius: 2px;
+  border-top: 5px solid red;
+  margin: 1rem;
+
+}
+
+
+
+
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
