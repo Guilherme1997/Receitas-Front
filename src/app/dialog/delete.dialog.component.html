@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Excluir </h1>
+<div mat-dialog-content>
+  <p>Deseja excluir a receita {{data.nome}} </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data.receitaId" (click)="excluir()" cdkFocusInitial>Excluir</button>
+</div>

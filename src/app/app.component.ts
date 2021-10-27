@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { WebApiService } from 'src/shared/services/web-api-service';
 import { rotas } from "src/shared/consts/rotas-const";
 import { MatTableDataSource } from '@angular/material/table';
-import { Receitas } from 'src/model/receitas-model';
+import { Receita } from 'src/model/receitas-model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ThrowStmt } from '@angular/compiler';
+import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialog } from './dialog/delete.dialog.component';
+import { ChildActivationStart } from '@angular/router';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { EditDialog } from './dialog/edit-dialog.component';
+
 
 @Component({
   selector: 'app-root',
@@ -15,9 +21,11 @@ import { ThrowStmt } from '@angular/compiler';
 
 export class AppComponent implements OnInit {
 
-  public displayedColumns: string[] = ['Nome', 'Descricao', 'Ingredientes','DataCriacao', 'acao'];
+  public displayedColumns: string[] = ['Nome', 'Descricao', 'Ingredientes', 'DataCriacao', 'acao'];
 
-  public dataSource: MatTableDataSource<Receitas>;
+  public dataSource: MatTableDataSource<Receita>;
+
+  public receitas: Array<Receita>;
 
   public formulario: FormGroup;
 
@@ -27,9 +35,9 @@ export class AppComponent implements OnInit {
 
   public nome: FormControl;
 
-  constructor(private webApiService: WebApiService) {
 
-  }
+
+  constructor(private webApiService: WebApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -61,13 +69,57 @@ export class AppComponent implements OnInit {
   }
 
   cadastrar() {
-    // this.webApiService.post(rotas)
+    this.webApiService.post(rotas.salvarReceitas, this.obterReceitas()).subscribe(
+      result => {
+
+        this.dataSource = new MatTableDataSource(result);
+      }
+    )
+  }
+
+
+  abrirDialogParaExclusao(receita: Receita) {
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      width: '250px',
+      data: { receitaId: receita.Id, nome: receita.Nome }
+    });
+
+    dialogRef.afterClosed().subscribe(receitaId => {
+      this.receitas = this.receitas.filter(x => x.Id != receitaId);
+      this.dataSource = new MatTableDataSource(this.receitas);
+    });
+  }
+
+  abrirDialogParaEditar(receita: Receita) {
+    const dialogRef = this.dialog.open(EditDialog, {
+      width: '250px',
+      data:  receita 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    });
+  }
+
+  obterReceitas() {
+    return {
+
+      "Nome": this.nome.value,
+
+      "DataCriacao": moment().format('D/MM/YYYY'),
+
+      "DataAlteracao": "teste",
+
+      "Descricao": this.descricao.value,
+
+      "Ingredientes": this.descricao.value
+    }
   }
 
   listarReceitas() {
-    this.webApiService.get(rotas.receita).subscribe(
+    this.webApiService.get(rotas.obterReceita).subscribe(
       result => {
-        console.log(result)
+        this.receitas = result;
         this.dataSource = new MatTableDataSource(result)
       }
     );

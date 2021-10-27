@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Editar </h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario" class="example-form">
+    <mat-form-field class="example-full-width" style="margin-right: 30px;width: 100%" appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input formControlName="nome" matInput>
+      <mat-error *ngIf="nome.invalid">Campo Obrigatório</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;" class="example-full-width" appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <input formControlName="descricao" matInput>
+      <mat-error *ngIf="descricao.invalid">Campo Obrigatório</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;" class="example-full-width" appearance="fill">
+
+      <mat-label>Ingredientes</mat-label>
+      <textarea formControlName="ingredientes" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+      <mat-error *ngIf="ingredientes.invalid">Campo Obrigatório</mat-error>
+
+    </mat-form-field>
+
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button  (click)="editar()" cdkFocusInitial>Editar</button>
+</div>

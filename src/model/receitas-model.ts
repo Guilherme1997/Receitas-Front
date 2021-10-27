@@ -1,4 +1,4 @@
-export class Receitas {
+export class Receita {
 
     Id: number
 

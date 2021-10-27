@@ -10,10 +10,16 @@ import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteDialog } from './dialog/delete.dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { EditDialog } from './dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DeleteDialog,
+    EditDialog
   ],
   imports: [
     BrowserModule,
@@ -26,7 +32,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatIconModule,
     FormsModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

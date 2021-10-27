@@ -8,7 +8,7 @@
       <mat-card class="cadastro-card">
 
         <form [formGroup]="formulario" class="example-form">
-          <mat-form-field  class="example-full-width" style="margin-right: 30px;width: 50%" appearance="fill">
+          <mat-form-field class="example-full-width" style="margin-right: 30px;width: 50%" appearance="fill">
             <mat-label>Nome</mat-label>
             <input formControlName="nome" matInput>
             <mat-error *ngIf="nome.invalid">Campo Obrigatório</mat-error>
@@ -68,18 +68,19 @@
 
       <ng-container matColumnDef="DataCriacao">
         <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
-        <td class="teste" mat-cell *matCellDef="let element"> 26/10/2021 </td>
+        <td class="teste" mat-cell *matCellDef="let element"> {{element.DataCriacao}} </td>
       </ng-container>
 
       <ng-container matColumnDef="acao">
         <th mat-header-cell *matHeaderCellDef> Ações </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+          <button (click)="abrirDialogParaExclusao(element)" mat-icon-button
+            aria-label="Example icon button with a vertical three dot icon">
             <mat-icon aria-hidden="false" style="color:red;margin-right: 5px;" aria-label="Example home icon">delete
             </mat-icon>
 
           </button>
-          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+          <button (click)="abrirDialogParaEditar(element)" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
 
             <mat-icon aria-hidden="false" style="color:black" aria-label="Example home icon">edit</mat-icon>
           </button>

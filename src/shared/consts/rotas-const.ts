@@ -1,3 +1,5 @@
 export const rotas = {
-    receita : "receitas"
+    obterReceita : "receitas",
+    salvarReceitas:"receitas/salvarReceita",
+    atualizarReceita : "receitas/atualizarReceita",
 }
