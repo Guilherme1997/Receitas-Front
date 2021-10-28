@@ -22,37 +22,45 @@ export class EditDialog implements OnInit {
 
     public formulario: FormGroup;
 
-    public descricao: FormControl;
+    public Descricao: FormControl;
 
-    public ingredientes: FormControl;
+    public Ingredientes: FormControl;
 
-    public nome: FormControl;
+    public Nome: FormControl;
 
 
     constructor(
         private webApiService: WebApiService,
         private snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<EditDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: Receita) { }
+        @Inject(MAT_DIALOG_DATA) public data: Receita) { 
+            this.novaReceita = this.data;
+        }
 
     ngOnInit(): void {
         this.createFormControl();
         this.createFormGroup();
+       
+        this.formulario.valueChanges.subscribe(result=>{
+            this.novaReceita = result;
+            this.novaReceita.Id = this.data.Id;
+            this.novaReceita.DataCriacao = this.data.DataCriacao
+        })
     }
 
     createFormGroup(): void {
         this.formulario = new FormGroup({
-            nome: this.nome,
-            descricao: this.descricao,
-            ingredientes: this.ingredientes,
+            Nome: this.Nome,
+            Descricao: this.Descricao,
+            Ingredientes: this.Ingredientes,
 
         });
     }
 
     createFormControl(): void {
-        this.nome = new FormControl(this.data.Nome, [Validators.required,])
-        this.ingredientes = new FormControl(this.data.Ingredientes, [Validators.required,])
-        this.descricao = new FormControl(this.data.Descricao, [Validators.required,])
+        this.Nome = new FormControl(this.data.Nome, [Validators.required,])
+        this.Ingredientes = new FormControl(this.data.Ingredientes, [Validators.required,])
+        this.Descricao = new FormControl(this.data.Descricao, [Validators.required,])
     }
 
     openSnackBar() {
@@ -66,15 +74,15 @@ export class EditDialog implements OnInit {
         return {
             "Id": this.data.Id,
 
-            "Nome": this.nome.value,
+            "Nome": this.Nome.value,
 
             "DataCriacao": this.data.DataCriacao,
 
             "DataAlteracao": moment().format('D/MM/YYYY'),
 
-            "Descricao": this.descricao.value,
+            "Descricao": this.Descricao.value,
 
-            "Ingredientes": this.ingredientes.value,
+            "Ingredientes": this.Ingredientes.value,
         }
     }
 
@@ -84,8 +92,6 @@ export class EditDialog implements OnInit {
     }
 
     editar() {
-        this.novaReceita = this.obterReceita();
-console.log( this.novaReceita)
         this.webApiService.put(rotas.atualizarReceita, this.obterReceita()).subscribe(
             () => { this.openSnackBar() }
         )

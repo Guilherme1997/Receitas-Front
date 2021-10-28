@@ -10,6 +10,7 @@ import { DeleteDialog } from './dialog/delete.dialog.component';
 import { ChildActivationStart } from '@angular/router';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { EditDialog } from './dialog/edit-dialog.component';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -71,8 +72,8 @@ export class AppComponent implements OnInit {
   cadastrar() {
     this.webApiService.post(rotas.salvarReceitas, this.obterReceitas()).subscribe(
       result => {
-
-        this.dataSource = new MatTableDataSource(result);
+        this.receitas = result;
+        this.dataSource = new MatTableDataSource(this.receitas);
       }
     )
   }
@@ -93,11 +94,15 @@ export class AppComponent implements OnInit {
   abrirDialogParaEditar(receita: Receita) {
     const dialogRef = this.dialog.open(EditDialog, {
       width: '250px',
-      data:  receita 
+      data: receita
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
+
+      this.receitas = this.receitas.map(x => x.Id == result.Id ? result : { ...x });
+
+      this.dataSource = new MatTableDataSource(this.receitas);
+
     });
   }
 
