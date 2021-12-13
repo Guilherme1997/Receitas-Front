@@ -1,3 +1,5 @@
+Projeto FrontEnd ,de uma empresa ficticia, para cadastro de receitas de comidas.
+
 # Receitas
 
 Este projeto foi gerado com [Angular CLI] (https://github.com/angular/angular-cli) versão 10.1.1.
